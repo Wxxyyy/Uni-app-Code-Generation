@@ -1,0 +1,80 @@
+﻿@model CodeGenerator.Web.Models.type
+
+@{
+    ViewBag.Title = "添加类别";
+}
+
+<h2>添加类别</h2>
+
+
+@*@using (Html.BeginForm(FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                <label class="form">请输入类别标题</label>
+                <input type="text" class="form-control" placeholder="请输入类别标题" name="t_title" />
+            </div>
+            <div class="col-md-10">
+                <br />
+                <input type="submit" class="btn btn-info" value="添加"/>
+            </div>
+        </div>
+    </div>
+}*@
+
+<form id="formMain">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-10">
+                <label class="form">请输入类别标题</label>
+                <input type="text" id="t_title" class="form-control" placeholder="请输入类别标题" name="t_type" />
+            </div>
+            <div class="col-md-10">
+                <br />
+                <input type="button" id="submit" class="btn btn-info" value="添加" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<div>
+    @Html.ActionLink("返回首页", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+            $('#submit').click(function () {
+                if ($('#t_title').val().length>0) {
+                    $.ajax({
+                        type: 'post',
+                        url: '/CodeGenerator/TypeAdd',
+                        data: $('#formMain').serialize(),
+                        dataType: 'json',
+                        success: function (res) {
+                            if (res.code > 0) {
+                                alert("返回结果：" + res.msg);
+                            } else {
+                                alert("返回结果：" + res.msg);
+                            }
+                            
+                        },
+                        error: function (res) {
+                            alert("服务器发生错误了！");
+                        }
+                    })
+                } else {
+                    alert('请输入标题');
+                }
+                
+            })
+        })
+    </script>
+}

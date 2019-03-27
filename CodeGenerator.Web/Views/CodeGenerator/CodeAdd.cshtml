@@ -1,0 +1,101 @@
+﻿@model CodeGenerator.Web.Models.pageshow
+
+@{
+    ViewBag.Title = "代码入库";
+}
+
+<h2>代码入库</h2>
+
+<style>
+    .boxdiv { padding: 20px; width: 370px; background-color: #eeeeee; margin: 10px; border-radius: 10px; }
+</style>
+
+<form id="formMain">
+    <div class="row" style="" id="bodydiv">
+        <div class="col-md-1 boxdiv">
+            <label class="control-label">请选择控件类别</label>
+            @*<select class="form-control">
+                    <option>请选择</option>
+                </select>*@
+            @Html.DropDownList("type", ViewBag.database as IEnumerable<SelectListItem>, new { @class = "dropdown-toggle form-control" })
+            <label class="control-label">请输入控件描述</label>
+            <textarea class="form-control" name="htmlDesc" wrap="off" rows="2"></textarea>
+        </div>
+        <div class="col-md-1 boxdiv">
+            <label class="control-label">请输入控件HTML</label>
+            <textarea class="form-control" wrap="off" rows="5"></textarea>
+        </div>
+        <div class="col-md-1 boxdiv">
+            <label class="control-label">请输入控件样式</label>
+            <textarea class="form-control" wrap="off" rows="5"></textarea>
+        </div>
+        <div class="col-md-1 boxdiv">
+            <label class="control-label">控件自定义变量</label>
+            <textarea class="form-control" wrap="off" rows="5"></textarea>
+        </div>
+        <div class="col-md-1 boxdiv">
+            <label class="control-label">请输入控件部件</label>
+            <textarea class="form-control" wrap="off" rows="5"></textarea>
+        </div>
+        <div class="col-md-1 boxdiv">
+            <label class="control-label">控件全局变量</label>
+            <textarea class="form-control" wrap="off" rows="5"></textarea>
+        </div>
+        <div class="col-md-1 boxdiv">
+            <label class="control-label">控件默认数据</label>
+            <textarea class="form-control" wrap="off" rows="5"></textarea>
+        </div>
+        <div class="col-md-1 boxdiv">
+            <label class="control-label">控件计算属性</label>
+            <textarea class="form-control" wrap="off" rows="5"></textarea>
+        </div>
+        <div class="col-md-1 boxdiv">
+            <label class="control-label">控件方法1</label>
+            <textarea name="method1" class="form-control" wrap="off" rows="5"></textarea>
+        </div>
+    </div>
+</form>
+<br />
+<br />
+
+
+<div>
+    <a href="@Url.Action("Index","CodeGenerator")" class="btn btn-info">返回首页</a>
+    <a href="@Url.Action("TypeAdd","CodeGenerator")" class="btn btn-info">添加类别</a>
+    <a href="javascript:viod(0)" id="AddMethod" class="btn btn-info">添加方法</a>
+    <a href="javascript:viod(0)" id="AddData" class="btn btn-info">代码入库</a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+            //动态添加方法框
+            var nid = 1;
+            $('#AddMethod').click(function () {
+                nid = nid + 1;
+                $("#bodydiv").append("<div class='col-md-1 boxdiv'><label class='control-label'>控件方法" + nid + "</label ><textarea name='method" + nid + "' class='form-control' wrap='off' rows='5'></textarea></div >");
+                
+            })
+
+            //添加提交（ajax）
+            $('#AddData').click(function () {
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("CodeAdd", "CodeGenerator")?nid=' + nid + '',
+                    dataType: 'json',
+                    data: $('#formMain').serialize(),
+                    success: function (res) {
+
+                    },
+                    error: function (res) {
+
+                    }
+                })
+            })
+
+
+        })
+    </script>
+}
