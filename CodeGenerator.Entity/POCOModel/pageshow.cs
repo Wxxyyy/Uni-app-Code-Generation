@@ -1,4 +1,4 @@
-namespace CodeGenerator.Web.Models
+namespace CodeGenerator.Entity.POCOModel
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,7 @@ namespace CodeGenerator.Web.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("codegenerator.pageshow")]
+    [Table("codegeneration.pageshow")]
     public partial class pageshow
     {
         [Key]
@@ -18,20 +18,10 @@ namespace CodeGenerator.Web.Models
 
         public int c_id { get; set; }
 
-        public int? definition_id { get; set; }
+        public int? t_id { get; set; }
 
-        public int? components_id { get; set; }
+        public virtual control control { get; set; }
 
-        public int? const_id { get; set; }
-
-        public int? default_id { get; set; }
-
-        public int? computed { get; set; }
-
-        public int? methods_id { get; set; }
-
-        public int? s_id { get; set; }
-
-        public int t_id { get; set; }
+        public virtual type type { get; set; }
     }
 }

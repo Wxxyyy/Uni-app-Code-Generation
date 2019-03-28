@@ -1,4 +1,4 @@
-﻿@model CodeGenerator.Web.Models.pageshow
+﻿@model CodeGenerator.Entity.POCOModel.pageshow
 
 @{
     ViewBag.Title = "代码入库";
@@ -7,52 +7,131 @@
 <h2>代码入库</h2>
 
 <style>
-    .boxdiv { padding: 20px; width: 370px; background-color: #eeeeee; margin: 10px; border-radius: 10px; }
+    .boxdiv { padding: 20px; width: 555px; background-color: #eeeeee; margin: 10px; border-radius: 10px; }
+    textarea{resize:none;}
 </style>
 
 <form id="formMain">
     <div class="row" style="" id="bodydiv">
+        @*控件类别&&控件描述&&控件样式*@
         <div class="col-md-1 boxdiv">
-            <label class="control-label">请选择控件类别</label>
-            @*<select class="form-control">
-                    <option>请选择</option>
-                </select>*@
-            @Html.DropDownList("type", ViewBag.database as IEnumerable<SelectListItem>, new { @class = "dropdown-toggle form-control" })
-            <label class="control-label">请输入控件描述</label>
-            <textarea class="form-control" name="htmlDesc" wrap="off" rows="2"></textarea>
+            <div class="col-md-1" style="width:40%;">
+                <label class="control-label">请选择控件类别</label>
+                @Html.DropDownList("type", ViewBag.database as IEnumerable<SelectListItem>, new { @class = "dropdown-toggle form-control" })
+                <label class="control-label">请输入控件描述</label>
+                <textarea class="form-control" name="PageDesc" wrap="off" rows="5"></textarea>
+            </div>
+            <div class="col-md-1" style="width:60%">
+                <label class="control-label">请输入控件样式</label>
+                <textarea class="form-control" name="stylecss"  wrap="off" rows="8"></textarea>
+            </div>
         </div>
+        @*控件html部分*@
         <div class="col-md-1 boxdiv">
-            <label class="control-label">请输入控件HTML</label>
-            <textarea class="form-control" wrap="off" rows="5"></textarea>
+            <div class="col-md-1" style="width:38%;">
+                <label class="control-label">控件名字</label>
+                <input type="text" name="htmlName" class="form-control" />
+                <label class="control-label">控件描述</label>
+                <textarea class="form-control" name="htmlDesc" wrap="off" rows="5"></textarea>
+            </div>
+            <div class="col-md-1" style="width:62%;">
+                <label class="control-label">控件html</label>
+                <textarea class="form-control" name="htmlValue" wrap="off" rows="8"></textarea>
+            </div>
         </div>
+        @*控件自定义变量部分*@
         <div class="col-md-1 boxdiv">
-            <label class="control-label">请输入控件样式</label>
-            <textarea class="form-control" wrap="off" rows="5"></textarea>
+            <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
+                <div class="col-md-1" style="width:60%;">
+                    <label>添加自定义变量</label>
+                </div>
+                <div class="col-md-1" style="width:30%;">
+                    <a class="btn btn-info" id="blbtn" href="javascript:viod(0)">增加一条</a>
+                </div>
+            </div>
+            <div class="col-md-1" id="bldiv" style="width:100%;height:180px;overflow-y:scroll;display:none;">
+
+            </div>
         </div>
+        @*控件部件部分*@
         <div class="col-md-1 boxdiv">
-            <label class="control-label">控件自定义变量</label>
-            <textarea class="form-control" wrap="off" rows="5"></textarea>
+            <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
+                <div class="col-md-1" style="width:60%;">
+                    <label>添加控件部件</label>
+                </div>
+                <div class="col-md-1" style="width:30%;">
+                    <a class="btn btn-info" id="kjbtn" href="javascript:viod(0)">增加一条</a>
+                </div>
+            </div>
+            <div class="col-md-1" id="kjdiv" style="width:100%;height:180px;overflow-y:scroll;display:none;">
+
+            </div>
         </div>
+        @*控件全局变量部分*@
         <div class="col-md-1 boxdiv">
-            <label class="control-label">请输入控件部件</label>
-            <textarea class="form-control" wrap="off" rows="5"></textarea>
+            <div class="col-md-1" style="width:100%;padding:5px;">
+                <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
+                    <div class="col-md-1" style="width:60%;">
+                        <label>添加全局变量</label>
+                    </div>
+                    <div class="col-md-1" style="width:30%;">
+                        <a class="btn btn-info" id="qjbtn" href="javascript:viod(0)">增加一条</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1" id="qjdiv" style="width:100%;height:180px;overflow-y:scroll;display:none;">
+
+            </div>
         </div>
+        @*控件默认数据部分*@
         <div class="col-md-1 boxdiv">
-            <label class="control-label">控件全局变量</label>
-            <textarea class="form-control" wrap="off" rows="5"></textarea>
+            <div class="col-md-1" style="width:100%;padding:5px;">
+                <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
+                    <div class="col-md-1" style="width:60%;">
+                        <label>添加默认数据</label>
+                    </div>
+                    <div class="col-md-1" style="width:30%;">
+                        <a class="btn btn-info" id="mrbtn" href="javascript:viod(0)">增加一条</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1" id="mrdiv" style="width:100%;height:180px;overflow-y:scroll;display:none;">
+                
+            </div>
         </div>
+        @*控件计算属性部分*@
         <div class="col-md-1 boxdiv">
-            <label class="control-label">控件默认数据</label>
-            <textarea class="form-control" wrap="off" rows="5"></textarea>
+            <div class="col-md-1" style="width:100%;padding:5px;">
+                <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
+                    <div class="col-md-1" style="width:60%;">
+                        <label>添加计算属性</label>
+                    </div>
+                    <div class="col-md-1" style="width:30%;">
+                        <a class="btn btn-info" id="jssxbtn" href="javascript:viod(0)">增加一条</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1" id="jssxdiv" style="width:100%;height:252px;overflow-y:scroll;display:none;">
+
+            </div>
         </div>
+        @*控件方法部分*@
         <div class="col-md-1 boxdiv">
-            <label class="control-label">控件计算属性</label>
-            <textarea class="form-control" wrap="off" rows="5"></textarea>
+            <div class="col-md-1" style="width:100%;padding:5px;">
+                <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
+                    <div class="col-md-1" style="width:60%;">
+                        <label>添加控件方法</label>
+                    </div>
+                    <div class="col-md-1" style="width:30%;">
+                        <a class="btn btn-info" id="ffbtn" href="javascript:viod(0)">增加一条</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1" id="ffdiv" style="width:100%;height:252px;overflow-y:scroll;display:none;">
+                
+            </div>
         </div>
-        <div class="col-md-1 boxdiv">
-            <label class="control-label">控件方法1</label>
-            <textarea name="method1" class="form-control" wrap="off" rows="5"></textarea>
-        </div>
+
     </div>
 </form>
 <br />
@@ -62,7 +141,6 @@
 <div>
     <a href="@Url.Action("Index","CodeGenerator")" class="btn btn-info">返回首页</a>
     <a href="@Url.Action("TypeAdd","CodeGenerator")" class="btn btn-info">添加类别</a>
-    <a href="javascript:viod(0)" id="AddMethod" class="btn btn-info">添加方法</a>
     <a href="javascript:viod(0)" id="AddData" class="btn btn-info">代码入库</a>
 </div>
 
@@ -71,26 +149,60 @@
 
     <script>
         $(function () {
-            //动态添加方法框
-            var nid = 1;
-            $('#AddMethod').click(function () {
-                nid = nid + 1;
-                $("#bodydiv").append("<div class='col-md-1 boxdiv'><label class='control-label'>控件方法" + nid + "</label ><textarea name='method" + nid + "' class='form-control' wrap='off' rows='5'></textarea></div >");
-                
+            //动态添加自定义变量
+            var bl = 0, kj = 0, qj = 0, mr = 0, jssx = 0, ff = 0;
+            $('#blbtn').click(function () {
+                $("#bldiv").show();
+                bl = bl + 1;
+                $("#bldiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style ="width:38%;" ><label class="control-label">自定义变量描述-' + bl + '</label> <textarea class="form-control" name="bldesc' + bl + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:62%;"><label class="control-label">控件自定义变量-' + bl + '</label><textarea name="bl' + bl + '" class="form-control" wrap="off" rows="1"></textarea></div></div>');
+            })
+            //动态添加控件部件
+            $('#kjbtn').click(function () {
+                $("#kjdiv").show();
+                kj = kj + 1;
+                $("#kjdiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style ="width:38%;" ><label class="control-label">控件部件描述-' + kj + '</label><textarea class="form-control" name="kjdesc' + kj + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:62%;"><label class="control-label">控件部件-' + kj + '</label><textarea class="form-control" name="kj' + kj + '" wrap="off" rows="1"></textarea></div></div >');
+            })
+            //动态添加全局变量
+            $('#qjbtn').click(function () {
+                $("#qjdiv").show();
+                qj = qj + 1;
+                $("#qjdiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style="width:38%;" ><label class="control-label">控件全局变量描述-' + qj + '</label><textarea class="form-control" name="qjdesc' + qj + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:62%;"><label class="control-label">控件全局变量-' + qj + '</label><textarea class="form-control" name="qj' + qj + '" wrap="off" rows="1"></textarea></div></div >');
+            })
+            //动态添加默认数据
+            $('#mrbtn').click(function () {
+                $("#mrdiv").show();
+                mr = mr + 1;
+                $("#mrdiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style="width:100%;" ><label class="control-label">控件默认数据描述-' + mr + '</label><textarea class="form-control" name="mrdesc' + mr + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:38%;"><label class="control-label">控件默认数据名-' + mr + '</label><textarea class="form-control" name="mrkey' + mr + '" wrap="off" rows="1"></textarea></div><div class="col-md-1" style="width:62%;"><label class="control-label">控件默认数据值-' + mr + '</label><textarea class="form-control" name="mrvalue' + mr + '" wrap="off" rows="1"></textarea></div></div >');
+            })
+            //动态添加计算属性
+            $('#jssxbtn').click(function () {
+                $("#jssxdiv").show();
+                jssx = jssx + 1;
+                $("#jssxdiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style="width:50%;" ><label class="control-label">控件计算属性名-' + jssx + '</label><textarea class="form-control" name="jssxname' + jssx + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:50%;"><label class="control-label">控件计算属性描述-' + jssx + '</label><textarea class="form-control" name="jssxdesc' + jssx + '" wrap="off" rows="1"></textarea></div><div class="col-md-1" style="width:100%;"><label class="control-label">控件计算属性方法-' + jssx + '</label><textarea class="form-control" name="jssxff' + jssx + '" wrap="off" rows="5"></textarea></div></div >');
+            })
+            //动态添加方法
+            $('#ffbtn').click(function () {
+                $("#ffdiv").show();
+                ff = ff + 1;
+                $("#ffdiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style="width:38%;" ><label class="control-label">控件方法名-' + ff + '</label><textarea class="form-control" name="ffname' + ff + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:62%;"><label class="control-label">控件方法描述-' + ff + '</label><textarea class="form-control" name="ffdesc' + ff + '" wrap="off" rows="1"></textarea></div><div class="col-md-1" style="width:100%;"><label class="control-label">控件完整发放体-' + ff + '</label><textarea class="form-control" name="ffti' + ff + '" wrap="off" rows="5"></textarea></div></div >');
             })
 
-            //添加提交（ajax）
+            //form表单添加提交（ajax）
             $('#AddData').click(function () {
                 $.ajax({
                     type: 'post',
-                    url: '@Url.Action("CodeAdd", "CodeGenerator")?nid=' + nid + '',
+                    url: '@Url.Action("CodeAdd", "CodeGenerator")?bl=' + bl + '&kj=' + kj + '&qj=' + qj + '&mr=' + mr + '&jssx=' + jssx + '&ff=' + ff + '',
                     dataType: 'json',
                     data: $('#formMain').serialize(),
                     success: function (res) {
-
+                        if (res.code > 0) {
+                            alert("返回结果：" + res.msg);
+                        } else {
+                            alert("返回结果：" + res.msg);
+                        }
                     },
                     error: function (res) {
-
+                        alert("服务器发生错误了！");
                     }
                 })
             })

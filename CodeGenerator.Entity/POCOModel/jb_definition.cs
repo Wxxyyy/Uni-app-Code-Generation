@@ -1,4 +1,4 @@
-namespace CodeGenerator.Web.Models
+namespace CodeGenerator.Entity.POCOModel
 {
     using System;
     using System.Collections.Generic;
@@ -6,12 +6,19 @@ namespace CodeGenerator.Web.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("codegenerator.jb_const")]
-    public partial class jb_const
+    [Table("codegeneration.jb_definition")]
+    public partial class jb_definition
     {
         public int id { get; set; }
 
         [StringLength(1073741823)]
         public string content { get; set; }
+
+        [StringLength(255)]
+        public string desc { get; set; }
+
+        public int? c_id { get; set; }
+
+        public virtual control control { get; set; }
     }
 }

@@ -145,17 +145,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CGDataBase.cs" />
-    <Compile Include="Models\control.cs" />
-    <Compile Include="Models\jb_components.cs" />
-    <Compile Include="Models\jb_computed.cs" />
-    <Compile Include="Models\jb_const.cs" />
-    <Compile Include="Models\jb_default.cs" />
-    <Compile Include="Models\jb_definition.cs" />
-    <Compile Include="Models\jb_methods.cs" />
-    <Compile Include="Models\pageshow.cs" />
-    <Compile Include="Models\style.cs" />
-    <Compile Include="Models\type.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -202,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -215,6 +205,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CodeGenerator.Business\CodeGenerator.Business.csproj">
+      <Project>{4608CA66-AF91-40EC-B002-BA2A618F9FD4}</Project>
+      <Name>CodeGenerator.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeGenerator.Common\CodeGenerator.Common.csproj">
+      <Project>{450AD53E-E443-4F53-9871-1CE5F7196173}</Project>
+      <Name>CodeGenerator.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeGenerator.Entity\CodeGenerator.Entity.csproj">
+      <Project>{05a00e0a-c3c2-433b-853a-59f8257b8ebb}</Project>
+      <Name>CodeGenerator.Entity</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
