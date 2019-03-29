@@ -12,8 +12,19 @@ using System.Threading.Tasks;
 namespace CodeGenerator.Business
 {
     
-    public class CodeInDataBase
+    public class CodeDataBase
     {
+        /// <summary>
+        /// 代码入库将数据添加到各个表中
+        /// </summary>
+        /// <param name="formInfo"></param>
+        /// <param name="bllist"></param>
+        /// <param name="kjlist"></param>
+        /// <param name="qjlist"></param>
+        /// <param name="mrlist"></param>
+        /// <param name="jssxlist"></param>
+        /// <param name="fflist"></param>
+        /// <returns></returns>
         public int AddCodeInBase(RequestFormInfo formInfo,List<definition> bllist, List<components> kjlist, List<data> qjlist, List<@default> mrlist, List<computed> jssxlist, List<methods> fflist)
         {
             //数据库上下文
@@ -38,13 +49,16 @@ namespace CodeGenerator.Business
                             c_ID = controlBase.id;
                         }
                         //添加样式
-                        style styleBase = new style()
+                        if (!string.IsNullOrWhiteSpace(formInfo.stylecss))
                         {
-                            content_css = StringDispose.AESEncrypt(formInfo.stylecss),
-                            c_id = c_ID
-                        };
-                        db.style.Add(styleBase);
-                        db.SaveChanges();
+                            style styleBase = new style()
+                            {
+                                content_css = StringDispose.AESEncrypt(formInfo.stylecss),
+                                c_id = c_ID
+                            };
+                            db.style.Add(styleBase);
+                            db.SaveChanges();
+                        }
 
                         //添加自定义变量
                         if (bllist.Count > 0)
@@ -166,5 +180,19 @@ namespace CodeGenerator.Business
                 }
             }
         }
+        
+        /// <summary>
+        /// 获取代码入库的信息
+        /// </summary>
+        public OperateResult GetDataBase(int limit, int offset)
+        {   
+            var db = new CGDataBase();
+            db.Configuration.ProxyCreationEnabled = false;
+            var query = db.control.AsQueryable();
+            var controllist = query.OrderBy(c => c.id).Skip(offset).Take(limit).ToList();
+            var retData = new { total = query.Count(), rows = controllist };
+            return new OperateResult(ResultStatus.Success, "", retData);
+        }
+
     }
 }

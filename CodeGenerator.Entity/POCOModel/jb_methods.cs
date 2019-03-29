@@ -21,5 +21,7 @@ namespace CodeGenerator.Entity.POCOModel
         public string desc { get; set; }
 
         public int? c_id { get; set; }
+
+        public virtual control control { get; set; }
     }
 }

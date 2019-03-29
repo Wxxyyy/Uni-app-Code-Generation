@@ -17,7 +17,9 @@ namespace CodeGenerator.Entity.POCOModel
             jb_data = new HashSet<jb_data>();
             jb_default = new HashSet<jb_default>();
             jb_definition = new HashSet<jb_definition>();
+            jb_methods = new HashSet<jb_methods>();
             pageshow = new HashSet<pageshow>();
+            style = new HashSet<style>();
         }
 
         public int id { get; set; }
@@ -47,6 +49,12 @@ namespace CodeGenerator.Entity.POCOModel
         public virtual ICollection<jb_definition> jb_definition { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<jb_methods> jb_methods { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<pageshow> pageshow { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<style> style { get; set; }
     }
 }

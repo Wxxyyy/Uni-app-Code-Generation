@@ -63,10 +63,20 @@ namespace CodeGenerator.Entity.POCOModel
                 .HasForeignKey(e => e.c_id);
 
             modelBuilder.Entity<control>()
+                .HasMany(e => e.jb_methods)
+                .WithOptional(e => e.control)
+                .HasForeignKey(e => e.c_id);
+
+            modelBuilder.Entity<control>()
                 .HasMany(e => e.pageshow)
                 .WithRequired(e => e.control)
                 .HasForeignKey(e => e.c_id)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<control>()
+                .HasMany(e => e.style)
+                .WithOptional(e => e.control)
+                .HasForeignKey(e => e.c_id);
 
             modelBuilder.Entity<jb_components>()
                 .Property(e => e.content)

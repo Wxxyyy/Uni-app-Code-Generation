@@ -7,8 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenerator.Web", "CodeGe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBase", "DataBase", "{1326BA23-7B3F-44EA-90C6-D1E0220102D9}"
 	ProjectSection(SolutionItems) = preProject
-		C:\Users\Administrator\Desktop\codegeneration(0.1).sql = C:\Users\Administrator\Desktop\codegeneration(0.1).sql
-		D:\Documents\CodeGenerator(1.0).sql = D:\Documents\CodeGenerator(1.0).sql
+		C:\Users\Administrator\Desktop\codegeneration.sql = C:\Users\Administrator\Desktop\codegeneration.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenerator.Business", "CodeGenerator.Business\CodeGenerator.Business.csproj", "{4608CA66-AF91-40EC-B002-BA2A618F9FD4}"

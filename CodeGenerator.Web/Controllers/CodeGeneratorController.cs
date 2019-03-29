@@ -14,6 +14,14 @@ namespace CodeGenerator.Web.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult Index(int limit, int offset)
+        {
+            CodeDataBase codeDataBase = new CodeDataBase();
+            var result= codeDataBase.GetDataBase(limit, offset);
+            //var rows = data.Skip(offset).Take(limit).ToList();
+            return Json(result.Data);
+        }
 
         //代码入库
         [HttpGet]
@@ -150,7 +158,7 @@ namespace CodeGenerator.Web.Controllers
 
             //调用方法开始进行数据库存储
             //实例化代码入库类
-            CodeInDataBase codeInDataBase = new CodeInDataBase();
+            CodeDataBase codeInDataBase = new CodeDataBase();
             int result= codeInDataBase.AddCodeInBase(formInfo,bianlianglist,kongjianList,quanjuList,morenList,jssxList,fangfaList);
             switch (result)
             {

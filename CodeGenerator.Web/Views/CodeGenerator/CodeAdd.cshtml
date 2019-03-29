@@ -19,7 +19,7 @@
                 <label class="control-label">请选择控件类别</label>
                 @Html.DropDownList("type", ViewBag.database as IEnumerable<SelectListItem>, new { @class = "dropdown-toggle form-control" })
                 <label class="control-label">请输入控件描述</label>
-                <textarea class="form-control" name="PageDesc" wrap="off" rows="5"></textarea>
+                <textarea class="form-control" id="pageDesc" name="PageDesc" wrap="off" rows="5"></textarea>
             </div>
             <div class="col-md-1" style="width:60%">
                 <label class="control-label">请输入控件样式</label>
@@ -30,13 +30,13 @@
         <div class="col-md-1 boxdiv">
             <div class="col-md-1" style="width:38%;">
                 <label class="control-label">控件名字</label>
-                <input type="text" name="htmlName" class="form-control" />
+                <input type="text" name="htmlName" id="htmlName" class="form-control" />
                 <label class="control-label">控件描述</label>
-                <textarea class="form-control" name="htmlDesc" wrap="off" rows="5"></textarea>
+                <textarea class="form-control" name="htmlDesc" id="htmlDesc" wrap="off" rows="5"></textarea>
             </div>
             <div class="col-md-1" style="width:62%;">
                 <label class="control-label">控件html</label>
-                <textarea class="form-control" name="htmlValue" wrap="off" rows="8"></textarea>
+                <textarea class="form-control" name="htmlValue" id="htmlvalue" wrap="off" rows="8"></textarea>
             </div>
         </div>
         @*控件自定义变量部分*@
@@ -46,7 +46,7 @@
                     <label>添加自定义变量</label>
                 </div>
                 <div class="col-md-1" style="width:30%;">
-                    <a class="btn btn-info" id="blbtn" href="javascript:viod(0)">增加一条</a>
+                    <a class="btn btn-info" id="blbtn" href="JavaScript:void(0)">增加一条</a>
                 </div>
             </div>
             <div class="col-md-1" id="bldiv" style="width:100%;height:180px;overflow-y:scroll;display:none;">
@@ -60,7 +60,7 @@
                     <label>添加控件部件</label>
                 </div>
                 <div class="col-md-1" style="width:30%;">
-                    <a class="btn btn-info" id="kjbtn" href="javascript:viod(0)">增加一条</a>
+                    <a class="btn btn-info" id="kjbtn" href="JavaScript:void(0)">增加一条</a>
                 </div>
             </div>
             <div class="col-md-1" id="kjdiv" style="width:100%;height:180px;overflow-y:scroll;display:none;">
@@ -75,7 +75,7 @@
                         <label>添加全局变量</label>
                     </div>
                     <div class="col-md-1" style="width:30%;">
-                        <a class="btn btn-info" id="qjbtn" href="javascript:viod(0)">增加一条</a>
+                        <a class="btn btn-info" id="qjbtn" href="JavaScript:void(0)">增加一条</a>
                     </div>
                 </div>
             </div>
@@ -91,7 +91,7 @@
                         <label>添加默认数据</label>
                     </div>
                     <div class="col-md-1" style="width:30%;">
-                        <a class="btn btn-info" id="mrbtn" href="javascript:viod(0)">增加一条</a>
+                        <a class="btn btn-info" id="mrbtn" href="JavaScript:void(0)">增加一条</a>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
                         <label>添加计算属性</label>
                     </div>
                     <div class="col-md-1" style="width:30%;">
-                        <a class="btn btn-info" id="jssxbtn" href="javascript:viod(0)">增加一条</a>
+                        <a class="btn btn-info" id="jssxbtn" href="JavaScript:void(0)">增加一条</a>
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@
                         <label>添加控件方法</label>
                     </div>
                     <div class="col-md-1" style="width:30%;">
-                        <a class="btn btn-info" id="ffbtn" href="javascript:viod(0)">增加一条</a>
+                        <a class="btn btn-info" id="ffbtn" href="JavaScript:void(0)">增加一条</a>
                     </div>
                 </div>
             </div>
@@ -141,7 +141,7 @@
 <div>
     <a href="@Url.Action("Index","CodeGenerator")" class="btn btn-info">返回首页</a>
     <a href="@Url.Action("TypeAdd","CodeGenerator")" class="btn btn-info">添加类别</a>
-    <a href="javascript:viod(0)" id="AddData" class="btn btn-info">代码入库</a>
+    <a href="JavaScript:void(0)" id="AddData" class="btn btn-info">代码入库</a>
 </div>
 
 @section Scripts {
@@ -189,6 +189,27 @@
 
             //form表单添加提交（ajax）
             $('#AddData').click(function () {
+                if ($('#type').val() == 0) {
+                    alert('请选择控件的类别！');
+                    return;
+                }
+                if ($('#pageDesc').val().length == 0) {
+                    alert('请输入控件描述信息！');
+                    return;
+                }
+                if ($('#htmlName').val().length == 0) {
+                    alert('请输入控件的名字！');
+                    return;
+                }
+                if ($('#htmlDesc').val().length == 0) {
+                    alert('请输入控件的描述！');
+                    return;
+                }
+                if ($('#htmlvalue').val().length == 0) {
+                    alert('请输入控件的html代码！');
+                    return;
+                }
+                
                 $.ajax({
                     type: 'post',
                     url: '@Url.Action("CodeAdd", "CodeGenerator")?bl=' + bl + '&kj=' + kj + '&qj=' + qj + '&mr=' + mr + '&jssx=' + jssx + '&ff=' + ff + '',

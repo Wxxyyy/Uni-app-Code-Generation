@@ -15,7 +15,7 @@ namespace CodeGenerator.Entity.POCOModel
         public string key { get; set; }
 
         [Required]
-        [StringLength(255)]
+        [StringLength(1073741823)]
         public string value { get; set; }
 
         [StringLength(255)]
