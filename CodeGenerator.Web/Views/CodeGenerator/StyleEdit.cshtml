@@ -1,0 +1,68 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>样式编辑</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+</head>
+<body>
+    @*控件类别&&控件描述&&控件样式*@
+    <div class="col-md-1 boxdiv">
+        <form id="formStyle">
+            <div class="col-md-1" style="width:100%">
+                <label class="control-label">请输入控件样式（style表）</label>
+                <input type="hidden" id="sid" name="sid" value="@ViewBag.sid" />
+                <input type="hidden" id="cid" name="cid" value="@ViewBag.cid" />
+                <textarea class="form-control" id="stylecss" name="stylecss" wrap="off" rows="18" style="max-width:100%;">@ViewBag.style</textarea>
+                <br />
+                @if (ViewBag.sid > 0)
+                {
+                    <input type="button" class="btn btn-info btnUStyle" value='保存' />
+                }
+                else
+                {
+                    <input type="button" class="btn btn-info btnUStyle" value='添加' />
+                }
+            </div>
+        </form>
+    </div>
+    <script>
+            $(function () {
+                $('.btnUStyle').click(function () {
+                    var sid = $('#sid').val();
+                    var style = $('#stylecss').val();
+                    if (style !="未查询到样式信息！") {
+                        if (sid > 0) {
+                            var url = '@Url.Action("StyleEdit","CodeGenerator")?type=update';
+                        } else {
+                            var url = '@Url.Action("StyleEdit","CodeGenerator")?type=add';
+                        }
+                        $.ajax({
+                            type: 'post',
+                            url: url,
+                            dataType: 'json',
+                            data: $('#formStyle').serialize(),
+                            success: function (res) {
+                                alert(res.msg);
+                            },
+                            error: function () {
+                                alert('哎呀，服务器发生了错误！');
+                            }
+                        })
+                    } else {
+                        alert('请输入控件样式！')
+                    }
+                })
+            })
+    </script>
+
+</body>
+</html>

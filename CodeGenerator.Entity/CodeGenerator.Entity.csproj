@@ -64,7 +64,7 @@
     <Compile Include="POCOModel\jb_default.cs" />
     <Compile Include="POCOModel\jb_definition.cs" />
     <Compile Include="POCOModel\jb_methods.cs" />
-    <Compile Include="POCOModel\pageshow.cs" />
+    <Compile Include="POCOModel\jb_rests.cs" />
     <Compile Include="POCOModel\style.cs" />
     <Compile Include="POCOModel\type.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,6 +75,8 @@
     <Compile Include="ViewModel\definition.cs" />
     <Compile Include="ViewModel\methods.cs" />
     <Compile Include="ViewModel\RequestFormInfo.cs" />
+    <Compile Include="ViewModel\rests.cs" />
+    <Compile Include="ViewModel\Style.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

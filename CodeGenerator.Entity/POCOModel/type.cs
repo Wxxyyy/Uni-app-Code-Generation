@@ -12,7 +12,7 @@ namespace CodeGenerator.Entity.POCOModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public type()
         {
-            pageshow = new HashSet<pageshow>();
+            control = new HashSet<control>();
         }
 
         [Key]
@@ -23,6 +23,6 @@ namespace CodeGenerator.Entity.POCOModel
         public string t_title { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<pageshow> pageshow { get; set; }
+        public virtual ICollection<control> control { get; set; }
     }
 }

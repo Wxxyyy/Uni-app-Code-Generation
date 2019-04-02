@@ -1,0 +1,95 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DefinitionEdit</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+</head>
+<body>
+    @*控件自定义变量部分*@
+    <div class="col-md-1 boxdiv">
+        <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
+            <div class="col-md-1" style="width:30%;">
+                @*<a class="btn btn-info" id="blbtn" href="JavaScript:void(0)">增加一条</a>*@
+                <input type="hidden" value="@ViewBag.cid" />
+            </div>
+        </div>
+        <form id="formbl">
+            <div class="col-md-1" id="bldiv" style="width:100%;height:380px;overflow-y:scroll;">
+                <div id="foreachdiv">
+                    @{
+                        int i = 1;
+                        foreach (var item in ViewBag.definitionlist)
+                        {
+                            <div class="col-md-1" style="width:100%;border-radius:5px;margin:5px;padding:5px;">
+                                <div class="col-md-1" style="width:100%;">
+                                    <input type="hidden" value="@item.id" />
+                                    <label class="control-label">自定义变量描述-@i</label>
+                                    <input class="form-control" name="bldesc" value="@item.desc" />
+                                </div><div class="col-md-1" style="width:100%;">
+                                    <label class="control-label">控件自定义变量-@i</label>
+                                    <textarea name="bl" class="form-control" wrap="off" rows="12" style="max-width:100%;">@item.content</textarea>
+                                </div>
+                            </div>
+                            i = i + 1;
+                        }
+                        if (i == 1)
+                        {
+                            <div>
+                                <h3>暂无数据！</h3>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </form>
+        <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
+            <div class="col-md-1" style="width:50%;">
+                <a class="btn btn-info" id="blbtn" href="JavaScript:void(0)">保存到数据库</a>
+                <a class="btn btn-info" id="btnAdd" href="JavaScript:void(0)">添加一条数据</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            var bl = 0;
+            //动态添加自定义变量
+            $('#btnAdd').click(function () {
+                $('#blbtn').text('添加到数据库')
+                $("#foreachdiv").empty();
+                bl = bl + 1;
+                $("#bldiv").append('<div class="col-md-1" style="width:100%;border-radius:5px;margin:5px;padding:5px;"><div class="col-md-1" style = "width:100%;" ><label class="control-label">添加自定义变量描述-' + bl + '</label><input class="form-control" name="bldesc' + bl + '" /></div > <div class="col-md-1" style="width:100%;"><label class="control-label">添加控件自定义变量-' + bl + '</label><textarea name="bl' + bl + '" class="form-control" wrap="off" rows="12" style="max-width:100%;"></textarea> </div></div >');
+            })
+
+            $('#blbtn').click(function () {
+                var btnname = $('#blbtn').text();
+                if (btnname == "保存到数据库") {
+                    var url = '@Url.Action("DefinitionEdit", "CodeGenerator")?type=Update';
+                } else if (btnname == "添加到数据库") {
+                    var url = '@Url.Action("DefinitionEdit", "CodeGenerator")?type=Add';
+                }
+                $.ajax({
+                    type: 'post',
+                    url: url,
+                    dataType: 'json',
+                    data: $('#formbl').serialize(),
+                    success: function () {
+
+                    },
+                    error: function () {
+                        alert('服务器错误！')
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+</html>

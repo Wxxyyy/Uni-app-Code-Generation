@@ -19,7 +19,7 @@ namespace CodeGenerator.Entity.POCOModel
         public virtual DbSet<jb_default> jb_default { get; set; }
         public virtual DbSet<jb_definition> jb_definition { get; set; }
         public virtual DbSet<jb_methods> jb_methods { get; set; }
-        public virtual DbSet<pageshow> pageshow { get; set; }
+        public virtual DbSet<jb_rests> jb_rests { get; set; }
         public virtual DbSet<style> style { get; set; }
         public virtual DbSet<type> type { get; set; }
 
@@ -68,10 +68,9 @@ namespace CodeGenerator.Entity.POCOModel
                 .HasForeignKey(e => e.c_id);
 
             modelBuilder.Entity<control>()
-                .HasMany(e => e.pageshow)
-                .WithRequired(e => e.control)
-                .HasForeignKey(e => e.c_id)
-                .WillCascadeOnDelete(false);
+                .HasMany(e => e.jb_rests)
+                .WithOptional(e => e.control)
+                .HasForeignKey(e => e.c_id);
 
             modelBuilder.Entity<control>()
                 .HasMany(e => e.style)
@@ -138,8 +137,16 @@ namespace CodeGenerator.Entity.POCOModel
                 .Property(e => e.desc)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<pageshow>()
-                .Property(e => e.p_title)
+            modelBuilder.Entity<jb_rests>()
+                .Property(e => e.name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<jb_rests>()
+                .Property(e => e.content)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<jb_rests>()
+                .Property(e => e.desc)
                 .IsUnicode(false);
 
             modelBuilder.Entity<style>()

@@ -1,7 +1,6 @@
 ﻿using CodeGenerator.Business;
 using CodeGenerator.Entity.POCOModel;
 using CodeGenerator.Entity.ViewModel;
-using CodeGenerator.Web.Models;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -12,13 +11,23 @@ namespace CodeGenerator.Web.Controllers
         // GET: CodeGenerator
         public ActionResult Index()
         {
+            //然后下拉列表数据
+            TypeInfo typeInfo = new TypeInfo();
+            List<type> list = typeInfo.SelectAllInfo();
+            var selectListItems = new List<SelectListItem>()
+            {
+                new SelectListItem(){Value="0",Text="请选择",Selected=true },
+            };
+            var typelist = new SelectList(list, "t_id", "t_title");
+            selectListItems.AddRange(typelist);
+            ViewBag.database = selectListItems;
             return View();
         }
         [HttpPost]
-        public ActionResult Index(int limit, int offset)
+        public ActionResult Index(int limit, int offset,int typeid)
         {
             CodeDataBase codeDataBase = new CodeDataBase();
-            var result= codeDataBase.GetDataBase(limit, offset);
+            var result= codeDataBase.GetDataBase(limit, offset,typeid);
             //var rows = data.Skip(offset).Take(limit).ToList();
             return Json(result.Data);
         }
@@ -27,6 +36,7 @@ namespace CodeGenerator.Web.Controllers
         [HttpGet]
         public ActionResult CodeAdd()
         {
+            //然后下拉列表数据
             TypeInfo typeInfo = new TypeInfo();
             List<type> list= typeInfo.SelectAllInfo();
             var selectListItems = new List<SelectListItem>()
@@ -136,6 +146,25 @@ namespace CodeGenerator.Web.Controllers
             }
 
             //遍历控件方法并放入集合
+            List<rests> qtfangfaList = new List<rests>();
+            for (int i = 1; i <= ff; i++)
+            {
+                string qtffname = Request.Form["qtffname" + i];
+                string qtffdesc = Request.Form["qtffdesc" + i];
+                string qtffti = Request.Form["qtffti" + i];
+                if (!string.IsNullOrWhiteSpace(qtffname) && !string.IsNullOrWhiteSpace(qtffdesc) && !string.IsNullOrWhiteSpace(qtffti))
+                {
+                    rests rests = new rests()
+                    {
+                        name = qtffname,
+                        desc = qtffdesc,
+                        content = qtffti
+                    };
+                    qtfangfaList.Add(rests);
+                }
+            }
+
+            //遍历控件方法并放入集合
             List<methods> fangfaList = new List<methods>();
             for (int i = 1; i <= ff; i++)
             {
@@ -152,14 +181,13 @@ namespace CodeGenerator.Web.Controllers
                     };
                     fangfaList.Add(methods);
                 }
-
             }
 
 
             //调用方法开始进行数据库存储
             //实例化代码入库类
             CodeDataBase codeInDataBase = new CodeDataBase();
-            int result= codeInDataBase.AddCodeInBase(formInfo,bianlianglist,kongjianList,quanjuList,morenList,jssxList,fangfaList);
+            int result= codeInDataBase.AddCodeInBase(formInfo,bianlianglist,kongjianList,quanjuList,morenList,jssxList, qtfangfaList, fangfaList);
             switch (result)
             {
                 case 0:
@@ -229,5 +257,68 @@ namespace CodeGenerator.Web.Controllers
                 return Json(new { code = 101, msg = "参数错误" },JsonRequestBehavior.AllowGet);
             }
         }
+
+        /// <summary>
+        /// 修改样式信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult StyleEdit(int htmlid)
+        {
+            //int htmlid = int.Parse(Request.Form["htmlID"]);
+            CodeDataBase codeData = new CodeDataBase();
+            var result = codeData.GetStyle(htmlid);
+            ViewBag.sid = ((style)result.Data).id;
+            ViewBag.cid = htmlid;
+            ViewBag.style =((style)result.Data).content_css;
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult StyleEdit(int cid,int sid,string stylecss,string type)
+        {
+            CodeDataBase codeData = new CodeDataBase();
+            if (type == "add")
+            {
+                var result = codeData.AddFistStyleCss(cid, stylecss);
+                return Json(new { code = result.ResultStatus, msg = result.Message });
+            }else if (type == "update")
+            {
+                var result = codeData.EditStyCss(sid, stylecss);
+                return Json(new { code = result.ResultStatus, msg = result.Message });
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult DefinitionEdit(int htmlID)
+        {
+            CodeDataBase codeData = new CodeDataBase();
+            var result = codeData.GetAllDefinition(htmlID);
+            ViewBag.definitionlist = result.Data;
+            return View();
+        }
+
+
+        /// <summary>
+        /// 更新数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult update(string type,RequestFormInfo formInfo)
+        {
+            switch (type)
+            {
+                case "html":
+                    CodeDataBase codeData = new CodeDataBase();
+                    var result= codeData.updateHtml(formInfo);
+                    return Json(new { code = result.ResultStatus, msg = result.Message }, JsonRequestBehavior.AllowGet);
+                case "":
+                    return View();
+            }
+            return View();
+        }
+
     }
 }

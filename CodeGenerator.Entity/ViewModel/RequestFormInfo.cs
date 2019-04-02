@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CodeGenerator.Web.Models
+namespace CodeGenerator.Entity.ViewModel
 {
     public class RequestFormInfo
     {
-        public int type { get; set; }
+        public int htmlID { get; set; }
 
-        public string PageDesc { get; set; }
+        public int type { get; set; }
 
         public string stylecss { get; set; }
 

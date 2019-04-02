@@ -1,4 +1,4 @@
-﻿@model CodeGenerator.Entity.POCOModel.pageshow
+﻿@model CodeGenerator.Entity.POCOModel.type
 
 @{
     ViewBag.Title = "代码入库";
@@ -8,62 +8,70 @@
 
 <style>
     .boxdiv { padding: 20px; width: 555px; background-color: #eeeeee; margin: 10px; border-radius: 10px; }
-    textarea{resize:none;}
+    textarea { resize: none; }
 </style>
 
 <form id="formMain">
     <div class="row" style="" id="bodydiv">
-        @*控件类别&&控件描述&&控件样式*@
-        <div class="col-md-1 boxdiv">
-            <div class="col-md-1" style="width:40%;">
-                <label class="control-label">请选择控件类别</label>
-                @Html.DropDownList("type", ViewBag.database as IEnumerable<SelectListItem>, new { @class = "dropdown-toggle form-control" })
-                <label class="control-label">请输入控件描述</label>
-                <textarea class="form-control" id="pageDesc" name="PageDesc" wrap="off" rows="5"></textarea>
-            </div>
-            <div class="col-md-1" style="width:60%">
-                <label class="control-label">请输入控件样式</label>
-                <textarea class="form-control" name="stylecss"  wrap="off" rows="8"></textarea>
-            </div>
-        </div>
         @*控件html部分*@
         <div class="col-md-1 boxdiv">
             <div class="col-md-1" style="width:38%;">
                 <label class="control-label">控件名字</label>
                 <input type="text" name="htmlName" id="htmlName" class="form-control" />
-                <label class="control-label">控件描述</label>
-                <textarea class="form-control" name="htmlDesc" id="htmlDesc" wrap="off" rows="5"></textarea>
             </div>
             <div class="col-md-1" style="width:62%;">
-                <label class="control-label">控件html</label>
-                <textarea class="form-control" name="htmlValue" id="htmlvalue" wrap="off" rows="8"></textarea>
+                <label class="control-label">控件描述</label>
+                <input type="text" class="form-control" name="htmlDesc" id="htmlDesc" />
+            </div>
+            <div class="col-md-1" style="width:100%;">
+                <label class="control-label">控件html(control表)</label>
+                <textarea class="form-control" name="htmlvalue" id="htmlvalue" wrap="off" rows="8" style="max-width:100%;"></textarea>
+            </div>
+        </div>
+        @*控件类别&&控件描述&&控件样式*@
+        <div class="col-md-1 boxdiv">
+            <div class="col-md-1" style="width:40%;">
+                <label class="control-label">请选择控件类别</label>
+                @Html.DropDownList("type", ViewBag.database as IEnumerable<SelectListItem>, new { @class = "dropdown-toggle form-control" })
+            </div>
+            <div class="col-md-1" style="width:100%">
+                <label class="control-label">请输入控件样式（style表）</label>
+                <textarea class="form-control" name="stylecss" wrap="off" rows="8" style="max-width:100%;"></textarea>
             </div>
         </div>
         @*控件自定义变量部分*@
         <div class="col-md-1 boxdiv">
             <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
                 <div class="col-md-1" style="width:60%;">
-                    <label>添加自定义变量</label>
+                    <label>添加自定义变量（definition表）</label>
                 </div>
                 <div class="col-md-1" style="width:30%;">
                     <a class="btn btn-info" id="blbtn" href="JavaScript:void(0)">增加一条</a>
                 </div>
             </div>
-            <div class="col-md-1" id="bldiv" style="width:100%;height:180px;overflow-y:scroll;display:none;">
-
+            <div class="col-md-1" id="bldiv" style="width:100%;height:248px;overflow-y:scroll;">
+                @*<div class="col-md-1" style="width:100%;border-radius:5px;margin:5px;padding:5px;">
+                    <div class="col-md-1" style="width:100%;">
+                        <label class="control-label">自定义变量描述-1</label>
+                        <input class="form-control" name="bldesc" />
+                    </div><div class="col-md-1" style="width:100%;">
+                        <label class="control-label">控件自定义变量-1</label>
+                        <textarea name="bl" class="form-control" wrap="off" rows="6" style="max-width:100%;"></textarea>
+                    </div>
+                </div>*@
             </div>
         </div>
         @*控件部件部分*@
         <div class="col-md-1 boxdiv">
             <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
                 <div class="col-md-1" style="width:60%;">
-                    <label>添加控件部件</label>
+                    <label>添加控件部件（components表）</label>
                 </div>
                 <div class="col-md-1" style="width:30%;">
                     <a class="btn btn-info" id="kjbtn" href="JavaScript:void(0)">增加一条</a>
                 </div>
             </div>
-            <div class="col-md-1" id="kjdiv" style="width:100%;height:180px;overflow-y:scroll;display:none;">
+            <div class="col-md-1" id="kjdiv" style="width:100%;height:248px;overflow-y:scroll;">
 
             </div>
         </div>
@@ -72,14 +80,14 @@
             <div class="col-md-1" style="width:100%;padding:5px;">
                 <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
                     <div class="col-md-1" style="width:60%;">
-                        <label>添加全局变量</label>
+                        <label>添加全局变量（data表）</label>
                     </div>
                     <div class="col-md-1" style="width:30%;">
                         <a class="btn btn-info" id="qjbtn" href="JavaScript:void(0)">增加一条</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-1" id="qjdiv" style="width:100%;height:180px;overflow-y:scroll;display:none;">
+            <div class="col-md-1" id="qjdiv" style="width:100%;height:248px;overflow-y:scroll;">
 
             </div>
         </div>
@@ -88,15 +96,28 @@
             <div class="col-md-1" style="width:100%;padding:5px;">
                 <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
                     <div class="col-md-1" style="width:60%;">
-                        <label>添加默认数据</label>
+                        <label>添加默认数据（default表）</label>
                     </div>
                     <div class="col-md-1" style="width:30%;">
                         <a class="btn btn-info" id="mrbtn" href="JavaScript:void(0)">增加一条</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-1" id="mrdiv" style="width:100%;height:180px;overflow-y:scroll;display:none;">
-                
+            <div class="col-md-1" id="mrdiv" style="width:100%;height:248px;overflow-y:scroll;">
+                @*<div class="col-md-1" style="width:100%;padding:5px;margin:5px;border-radius:5px;">
+                    <div class="col-md-1" style="width:100%;">
+                        <label class="control-label">控件默认数据描述-1</label>
+                        <input class="form-control" name="mrdesc"/>
+                    </div>
+                    <div class="col-md-1" style="width:38%;">
+                        <label class="control-label">控件默认数据名-1</label>
+                        <textarea class="form-control" name="mrkey" wrap="off" rows="6"></textarea>
+                    </div>
+                    <div class="col-md-1" style="width:62%;">
+                        <label class="control-label">控件默认数据值-1</label>
+                        <textarea class="form-control" name="mrvalue" wrap="off" rows="6"></textarea>
+                    </div>
+                </div>*@
             </div>
         </div>
         @*控件计算属性部分*@
@@ -104,33 +125,66 @@
             <div class="col-md-1" style="width:100%;padding:5px;">
                 <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
                     <div class="col-md-1" style="width:60%;">
-                        <label>添加计算属性</label>
+                        <label>添加计算属性（computed表）</label>
                     </div>
                     <div class="col-md-1" style="width:30%;">
                         <a class="btn btn-info" id="jssxbtn" href="JavaScript:void(0)">增加一条</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-1" id="jssxdiv" style="width:100%;height:252px;overflow-y:scroll;display:none;">
+            <div class="col-md-1" id="jssxdiv" style="width:100%;height:248px;overflow-y:scroll;">
+                @*<div class="col-md-1" style="width:100%;padding:5px;margin:5px;border-radius:5px;">
+                    <div class="col-md-1" style="width:50%;">
+                        <label class="control-label">控件计算属性名-1</label>
+                        <input type="text" class="form-control" name="jssxname"/>
+                    </div>
+                    <div class="col-md-1" style="width:50%;">
+                        <label class="control-label">控件计算属性描述-1</label>
+                        <input type="text" class="form-control" name="jssxdesc"/>
+                    </div>
+                    <div class="col-md-1" style="width:100%;">
+                        <label class="control-label">控件计算属性方法-1</label>
+                        <textarea class="form-control" name="jssxff" wrap="off" rows="6" style="max-width:100%;"></textarea>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+
+        @*控件其他方法部分*@
+        <div class="col-md-1 boxdiv">
+            <div class="col-md-1" style="width:100%;padding:5px;">
+                <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
+                    <div class="col-md-1" style="width:60%;">
+                        <label>控件其他方法（rests表）</label>
+                    </div>
+                    <div class="col-md-1" style="width:30%;">
+                        <a class="btn btn-info" id="qtffbtn" href="JavaScript:void(0)">增加一条</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1" id="qtffdiv" style="width:100%;height:248px;overflow-y:scroll;">
 
             </div>
         </div>
+
         @*控件方法部分*@
         <div class="col-md-1 boxdiv">
             <div class="col-md-1" style="width:100%;padding:5px;">
                 <div class="col-md-1" style="width:100%;padding:5px;text-align:center;">
                     <div class="col-md-1" style="width:60%;">
-                        <label>添加控件方法</label>
+                        <label>添加控件方法（methods表）</label>
                     </div>
                     <div class="col-md-1" style="width:30%;">
                         <a class="btn btn-info" id="ffbtn" href="JavaScript:void(0)">增加一条</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-1" id="ffdiv" style="width:100%;height:252px;overflow-y:scroll;display:none;">
-                
+            <div class="col-md-1" id="ffdiv" style="width:100%;height:248px;overflow-y:scroll;">
+
             </div>
         </div>
+
+
 
     </div>
 </form>
@@ -149,42 +203,48 @@
 
     <script>
         $(function () {
+            var bl = 0, kj = 0, qj = 0, mr = 0, jssx = 0, qtff = 0, ff = 0;
             //动态添加自定义变量
-            var bl = 0, kj = 0, qj = 0, mr = 0, jssx = 0, ff = 0;
             $('#blbtn').click(function () {
                 $("#bldiv").show();
                 bl = bl + 1;
-                $("#bldiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style ="width:38%;" ><label class="control-label">自定义变量描述-' + bl + '</label> <textarea class="form-control" name="bldesc' + bl + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:62%;"><label class="control-label">控件自定义变量-' + bl + '</label><textarea name="bl' + bl + '" class="form-control" wrap="off" rows="1"></textarea></div></div>');
+                $("#bldiv").append('<div class="col-md-1" style="width:100%;border-radius:5px;margin:5px;padding:5px;"><div class="col-md-1" style = "width:100%;" ><label class="control-label">自定义变量描述-' + bl + '</label><input class="form-control" name="bldesc' + bl + '" /></div > <div class="col-md-1" style="width:100%;"><label class="control-label">控件自定义变量-' + bl + '</label><textarea name="bl' + bl + '" class="form-control" wrap="off" rows="6" style="max-width:100%;"></textarea> </div></div >');
             })
             //动态添加控件部件
             $('#kjbtn').click(function () {
                 $("#kjdiv").show();
                 kj = kj + 1;
-                $("#kjdiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style ="width:38%;" ><label class="control-label">控件部件描述-' + kj + '</label><textarea class="form-control" name="kjdesc' + kj + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:62%;"><label class="control-label">控件部件-' + kj + '</label><textarea class="form-control" name="kj' + kj + '" wrap="off" rows="1"></textarea></div></div >');
+                $("#kjdiv").append('<div class="col-md-1" style="width:100%;border-radius:5px;margin:5px;padding:5px;"><div class="col-md-1" style = "width:100%;" ><label class="control-label">控件部件描述-' + kj + '</label><input class="form-control" name="kjdesc' + kj + '" /></div > <div class="col-md-1" style="width:100%;"><label class="control-label">控件部件-' + kj + '</label><textarea name="kj' + kj + '" class="form-control" wrap="off" rows="6" style="max-width:100%;"></textarea> </div></div >');
             })
             //动态添加全局变量
             $('#qjbtn').click(function () {
                 $("#qjdiv").show();
                 qj = qj + 1;
-                $("#qjdiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style="width:38%;" ><label class="control-label">控件全局变量描述-' + qj + '</label><textarea class="form-control" name="qjdesc' + qj + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:62%;"><label class="control-label">控件全局变量-' + qj + '</label><textarea class="form-control" name="qj' + qj + '" wrap="off" rows="1"></textarea></div></div >');
+                $("#qjdiv").append('<div class="col-md-1" style="width:100%;border-radius:5px;margin:5px;padding:5px;"><div class="col-md-1" style = "width:100%;" ><label class="control-label">控件全局变量描述-' + qj + '</label><input class="form-control" name="qjdesc' + qj + '" /></div > <div class="col-md-1" style="width:100%;"><label class="control-label">控件全局变量-' + qj + '</label><textarea name="qj' + qj + '" class="form-control" wrap="off" rows="6" style="max-width:100%;"></textarea> </div></div >');
             })
             //动态添加默认数据
             $('#mrbtn').click(function () {
                 $("#mrdiv").show();
                 mr = mr + 1;
-                $("#mrdiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style="width:100%;" ><label class="control-label">控件默认数据描述-' + mr + '</label><textarea class="form-control" name="mrdesc' + mr + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:38%;"><label class="control-label">控件默认数据名-' + mr + '</label><textarea class="form-control" name="mrkey' + mr + '" wrap="off" rows="1"></textarea></div><div class="col-md-1" style="width:62%;"><label class="control-label">控件默认数据值-' + mr + '</label><textarea class="form-control" name="mrvalue' + mr + '" wrap="off" rows="1"></textarea></div></div >');
+                $("#mrdiv").append('<div class="col-md-1" style="width:100%;padding:5px;margin:5px;border-radius:5px;"><div class= "col-md-1" style = "width:100%;" ><label class="control-label">控件默认数据描述-' + mr + '</label><input class="form-control" name="mrdesc' + mr + '" /></div ><div class="col-md-1" style="width:38%;"><label class="control-label">控件默认数据名-' + mr + '</label><textarea class="form-control" name="mrkey' + mr + '" wrap="off" rows="6"></textarea></div><div class="col-md-1" style="width:62%;"><label class="control-label">控件默认数据值-' + mr + '</label><textarea class="form-control" name="mrvalue' + mr + '" wrap="off" rows="6"></textarea></div></div >');
             })
             //动态添加计算属性
             $('#jssxbtn').click(function () {
                 $("#jssxdiv").show();
                 jssx = jssx + 1;
-                $("#jssxdiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style="width:50%;" ><label class="control-label">控件计算属性名-' + jssx + '</label><textarea class="form-control" name="jssxname' + jssx + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:50%;"><label class="control-label">控件计算属性描述-' + jssx + '</label><textarea class="form-control" name="jssxdesc' + jssx + '" wrap="off" rows="1"></textarea></div><div class="col-md-1" style="width:100%;"><label class="control-label">控件计算属性方法-' + jssx + '</label><textarea class="form-control" name="jssxff' + jssx + '" wrap="off" rows="5"></textarea></div></div >');
+                $("#jssxdiv").append('<div class="col-md-1" style="width:100%;padding:5px;margin:5px;border-radius:5px;"><div class= "col-md-1" style = "width:50%;" ><label class="control-label">控件计算属性描述-' + jssx + '</label><input type="text" class="form-control" name="jssxdesc' + jssx + '" /></div ><div class="col-md-1" style="width:50%;"><label class="control-label">控件计算属性名-' + jssx + '</label><input type="text" class="form-control" name="jssxname' + jssx + '" /></div><div class="col-md-1" style="width:100%;"><label class="control-label">控件计算属性方法-' + jssx + '</label><textarea class="form-control" name="jssxff' + jssx + '" wrap="off" rows="6" style="max-width:100%;"></textarea></div></div >')
+            })
+            //动态添加其他方法
+            $('#qtffbtn').click(function () {
+                $("#qtffdiv").show();
+                qtff = qtff + 1;
+                $("#qtffdiv").append('<div class="col-md-1" style="width:100%;padding:5px;margin:5px;border-radius:5px;"><div class= "col-md-1" style = "width:50%;" ><label class="control-label">控件其他方法名-' + qtff + '</label><input type="text" class="form-control" name="qtffdesc' + qtff + '" /></div ><div class="col-md-1" style="width:50%;"><label class="control-label">控件其他方法描述-' + qtff + '</label><input type="text" class="form-control" name="qtffname' + qtff + '" /></div><div class="col-md-1" style="width:100%;"><label class="control-label">控件其他方法完整发放体-' + qtff + '</label><textarea class="form-control" name="qtffti' + qtff + '" wrap="off" rows="6" style="max-width:100%;"></textarea></div></div >');
             })
             //动态添加方法
             $('#ffbtn').click(function () {
                 $("#ffdiv").show();
                 ff = ff + 1;
-                $("#ffdiv").append('<div class="col-md-1" style="width:100%;background-color:#cdcdcd;padding:5px;margin:5px;border-radius:5px;"><div class="col-md-1" style="width:38%;" ><label class="control-label">控件方法名-' + ff + '</label><textarea class="form-control" name="ffname' + ff + '" wrap="off" rows="1"></textarea></div ><div class="col-md-1" style="width:62%;"><label class="control-label">控件方法描述-' + ff + '</label><textarea class="form-control" name="ffdesc' + ff + '" wrap="off" rows="1"></textarea></div><div class="col-md-1" style="width:100%;"><label class="control-label">控件完整发放体-' + ff + '</label><textarea class="form-control" name="ffti' + ff + '" wrap="off" rows="5"></textarea></div></div >');
+                $("#ffdiv").append('<div class="col-md-1" style="width:100%;padding:5px;margin:5px;border-radius:5px;"><div class= "col-md-1" style = "width:50%;" ><label class="control-label">控件方法名-' + ff + '</label><input type="text" class="form-control" name="ffdesc' + ff + '" /></div ><div class="col-md-1" style="width:50%;"><label class="control-label">控件方法描述-' + ff + '</label><input type="text" class="form-control" name="ffname' + ff + '" /></div><div class="col-md-1" style="width:100%;"><label class="control-label">控件完整发放体-' + ff + '</label><textarea class="form-control" name="ffti' + ff + '" wrap="off" rows="6" style="max-width:100%;"></textarea></div></div >');
             })
 
             //form表单添加提交（ajax）
@@ -193,10 +253,10 @@
                     alert('请选择控件的类别！');
                     return;
                 }
-                if ($('#pageDesc').val().length == 0) {
-                    alert('请输入控件描述信息！');
-                    return;
-                }
+                //if ($('#pageDesc').val().length == 0) {
+                //    alert('请输入控件描述信息！');
+                //    return;
+                //}
                 if ($('#htmlName').val().length == 0) {
                     alert('请输入控件的名字！');
                     return;
@@ -209,7 +269,7 @@
                     alert('请输入控件的html代码！');
                     return;
                 }
-                
+
                 $.ajax({
                     type: 'post',
                     url: '@Url.Action("CodeAdd", "CodeGenerator")?bl=' + bl + '&kj=' + kj + '&qj=' + qj + '&mr=' + mr + '&jssx=' + jssx + '&ff=' + ff + '',
@@ -227,6 +287,7 @@
                     }
                 })
             })
+
 
 
         })
